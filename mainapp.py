@@ -110,8 +110,6 @@ def process_serve_chestct():
    print 'prior to printing matrix'
    imgarr, data_encode = printMatrix(panel1, panel2, panel3, panel4, prefix, nfiles)
    
-   print imgarr, dataencode
-
    return jsonify({"success":result,"imagefile":data_encode,"imgarr":imgarr})
 
 @app.route('/upload', methods=['POST'])
@@ -344,11 +342,10 @@ def printMatrix(p1, p2, p3, p4, pfx, nfls):
     arr = []
     dataenc = None
 
-    print 'getting connection for printing'
     conn = S3Connection(ACCESS_KEY, SECRET_KEY)
     bkt = conn.get_bucket('chestcad')
     k = Key(bkt)
-
+    
     numslices = p1.shape[2]
 
     if numslices != nfls:
@@ -357,7 +354,6 @@ def printMatrix(p1, p2, p3, p4, pfx, nfls):
     for z in xrange(nfls):
 
        mykey = pfx+'-'+str(nfls)+'-'+str(z)
-       print key
        k.key = mykey
 
        # Paste 4x4 Plot
@@ -380,8 +376,9 @@ def printMatrix(p1, p2, p3, p4, pfx, nfls):
        pil_backdrop.paste(pil_panel4,(pw+BUFF*2,BUFF*2+ph))
        
        pil_backdrop.save(outdir+pre+str(z)+'.png')'''
-       
-       pil_panel1 = Image.fromarray(p1[:,:,z])
+
+       copyarr = p1[:,:,z].copy()
+       pil_panel1 = Image.fromarray(copyarr)
        pil_panel1 = pil_panel1.convert('RGB')
        
        imgout = cStringIO.StringIO()
@@ -394,8 +391,6 @@ def printMatrix(p1, p2, p3, p4, pfx, nfls):
        dataenc = data.encode("base64")
        arr.append(k.generate_url(3600))
        
-    print arr
-   
     return arr, dataenc
 
 def get_LUT_value(data, window, level):
