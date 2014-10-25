@@ -81,6 +81,7 @@ def process_serve_chestct():
 
    matrix3D = np.array([])
    initFile = True
+   imgarr = []
 
    conn = S3Connection(ACCESS_KEY, SECRET_KEY)
    bkt = conn.get_bucket('chestcad')
@@ -106,8 +107,11 @@ def process_serve_chestct():
    
    dimension = matrix3D.shape[0]
    panel1, panel2, panel3, panel4 = processMatrix(matrix3D, dimension)
+   print 'prior to printing matrix'
    imgarr, data_encode = printMatrix(panel1, panel2, panel3, panel4, prefix, nfiles)
    
+   print imgarr, dataencode
+
    return jsonify({"success":result,"imagefile":data_encode,"imgarr":imgarr})
 
 @app.route('/upload', methods=['POST'])
@@ -320,24 +324,27 @@ def processMatrix(mtx,dim):
 
     print nummarks, bins
     for i in range(1, nummarks+1):
-        com = ndimage.measurements.center_of_mass(markers == i)
-        print com
-        tmpimg_orig = np.array(original[:,:,int(com[2])])
-        tmpimg_open = np.array(opened[:,:,int(com[2])])
-        cv2.circle(tmpimg_orig,(int(com[1]),int(com[0])),50,[255,255,255],10)            
-        cv2.circle(tmpimg_open,(int(com[1]),int(com[0])),50,[255,255,255],10)            
-        original[:,:,com[2]] = tmpimg_orig
-        opened[:,:,com[2]] = tmpimg_open
-
+        
+       com = ndimage.measurements.center_of_mass(markers == i)
+       print com
+       tmpimg_orig = np.array(original[:,:,int(com[2])])
+       tmpimg_open = np.array(opened[:,:,int(com[2])])
+       cv2.circle(tmpimg_orig,(int(com[1]),int(com[0])),50,[255,255,255],10)            
+       cv2.circle(tmpimg_open,(int(com[1]),int(com[0])),50,[255,255,255],10)            
+       original[:,:,com[2]] = tmpimg_orig
+       opened[:,:,com[2]] = tmpimg_open
+        
+    print original.shape
     return original, eroded, markers, opened
 
 def printMatrix(p1, p2, p3, p4, pfx, nfls):
 
     BUFF = 40 
 
-    imgarr = []
+    arr = []
     dataenc = None
 
+    print 'getting connection for printing'
     conn = S3Connection(ACCESS_KEY, SECRET_KEY)
     bkt = conn.get_bucket('chestcad')
     k = Key(bkt)
@@ -350,6 +357,7 @@ def printMatrix(p1, p2, p3, p4, pfx, nfls):
     for z in xrange(nfls):
 
        mykey = pfx+'-'+str(nfls)+'-'+str(z)
+       print key
        k.key = mykey
 
        # Paste 4x4 Plot
@@ -384,9 +392,11 @@ def printMatrix(p1, p2, p3, p4, pfx, nfls):
        data = k.get_contents_as_string()
        #k.delete() # putting the delete here causes premature loss of the image; need to find somewhere else to do it probably performed via outside function when called from javascript
        dataenc = data.encode("base64")
-       imgarr.append(k.generate_url(3600))
+       arr.append(k.generate_url(3600))
        
-    return imgarr, dataenc
+    print arr
+   
+    return arr, dataenc
 
 def get_LUT_value(data, window, level):
     return np.piecewise(data,
