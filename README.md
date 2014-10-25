@@ -1,7 +1,7 @@
-QADense ("KAY-dense")
-=====================
+Chest Detect Computer-Aided Detection Tool
+==========================================
 
-A Python-based javascript/HTML5 computer vision breast density quantification tool. Try it [here](http://qadense.com). 
+A Python-based JavaScript/HTML5 computer-aided detection (CAD) tool for pulmonary nodules. Try it [here](http://chestdetect.com). 
 
 Email Jason D. Balkman, MD (jshining@gmail.com) for all coding/implementation contributions and comments. 
 

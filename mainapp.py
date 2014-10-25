@@ -56,8 +56,8 @@ PNG_EXTENSIONS = ['png']
 JPG_EXTENSIONS = ['jpg', 'jpeg']
 DEBUG = False
 FONT_PATH = 'static/fonts/'
-ACCESS_KEY = 'AKIAJE4VDF62RFTT3TRA'
-SECRET_KEY = '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'
+ACCESS_KEY = ''
+SECRET_KEY = ''
 
 @app.route('/')
 def hello_world():
