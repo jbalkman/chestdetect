@@ -1,0 +1,41 @@
+/* AJAX STYLES
+-------------------------------------------------- */
+
+#loading-indicator {
+ /*   transition: opacity 2s linear, margin-top 2s step-start, z-index 2s step-start;
+    display: block;
+ position: absolute;
+  margin-left: auto;
+  margin-right: auto; 
+  left: 10px;
+  top: 10px;*/
+}
+
+#canvas-container {
+    /*border: 1px solid grey;
+    border-radius: 3px;
+    position: relative;
+    margin: 80px auto 90px;
+    min-height: 290px;
+    overflow: hidden;
+    padding-bottom: 40px;
+    width: 990px;*/
+}
+
+canvas {
+    display: block;
+    margin: 0px;
+}
+
+/*#my-canvas {
+    margin: 40px;
+    border: 1px solid grey;
+    border-radius: 3px;
+    position: relative;
+    margin: 80px auto 90px;
+    min-height: 290px;
+    overflow: hidden;
+    padding-bottom: 40px;
+    width: 990px;
+}*/
+

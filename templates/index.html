@@ -1,0 +1,212 @@
+<!doctype html>
+
+<html>
+<head>
+
+<meta charset="utf-8" />
+<title>Chest CAD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Bootstrap -->
+<link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for carousel -->
+<link href="static/css/carousel.css" rel="stylesheet">
+
+<!-- My custom styles  -->
+<link href="static/css/custom.css" rel="stylesheet">
+
+<!-- JQuery File Upload -->
+<link rel="stylesheet" href="static/css/styles.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script type="text/javascript" src="static/js/jquery.filedrop.js"></script>
+<script type="text/javascript" src="static/js/jquery.mooscan.js"></script>
+<script type="text/javascript" src="static/js/display.js"></script>
+<script type="text/javascript" src="static/js/upload.js"></script>
+<script type="text/javascript" src="static/js/submit.js"></script>
+<script type="text/javascript" src="static/js/hover.js"></script>
+<script type="text/javascript" src="static/js/jquery.fileDownload.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+
+<script src="static/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <div class="navbar-wrapper">
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Chest CT Computer-Aided Detection (CAD)</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <!--<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>-->
+            </ul>
+          </div>
+        </div>
+      </div>    
+    </div>
+  </div>
+    
+  <!-- Carousel 
+       ================================================== -->
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="item active">
+        <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:" alt="First slide">
+        <img src="static/img/Fig1.jpg" alt="First slide">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Cloud-based Chest CT CAD</h1>
+            <p>Using cloud computing to distibute a fully-automated chest CT computer-aided detection tool.</p>
+            <p><a class="btn btn-lg btn-primary" href="#dropbox-container" role="button">Try It Now</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:" alt="Second slide">
+        <img src="static/img/Fig2.jpg" alt="Second slide">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Customized Open Source Algorithms</h1>
+            <p>Python-based open source algorithms can be customized and compared to create a collaborative research test bench.</p>
+            <p><a class="btn btn-lg btn-primary" href="#dropbox-container" role="button">Try It Now</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:" alt="Third slide">
+        <img src="static/img/Fig3.jpg" alt="Third slide">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Easy To Use</h1>
+            <p>Drag and drop any chest CT stack in lung windows and TIFF format into the drop container and click the analyze button to begin processing. Results will appear below.</p>
+            <p><a class="btn btn-lg btn-primary" href="#dropbox-container" role="button">Try It Now</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+  </div><!-- /.carousel -->
+  
+  <!-- Marketing messaging and featurettes
+       ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div id="download-container">
+      <div class="span7 text-center"><h3>Downloadable Test Files (download, then drag and drop into the container below)</h3></div>
+      <div class="row">
+	<div class="col-md-3 col-md-offset-3"><h4>Test Patient 1</h4></div>
+	<div class="col-md-3"><h4>Test Patient 2</h4></div>
+      </div>
+      <div class="row">
+	<div class="col-md-3 col-md-offset-3">
+	  <a href="/downloads/Patient1.zip" class="predownload" title="Patient 1 Chest CT" id="/downloads/Preview1.jpg">
+	    <img src="static/img/Preview1.jpg" width="100" height="100" alt="gallery thumbnail"/></a>
+	</div>
+	<div class="col-md-3">
+	  <a href="/downloads/Patient2.zip" class="predownload" title="Patient 2 Chest CT" id="/downloads/Preview2.jpg">
+	    <img src="static/img/Preview2.jpg" width="100" height="100" alt="gallery thumbnail"/></a>
+	</div>
+      </div>
+  </div>
+  
+  <div id="results-container" style="display:none">
+    <div class="container marketing">
+      <hr class="featurette-divider">
+      <h1>RESULTS</h1>
+      <div class="span7 text-center">    	
+	<table class="table table-striped table-bordered table-condensed">
+	  <thead align="center">
+	    <tr>
+	      <th>Nodules</th>
+	    </tr>
+	  </thead>
+	  <tbody align="left">
+	    <tr>
+	      <td>Number of Nodules</td>
+	      <td id="NUM"></td>
+	    </tr>
+	    <tr>
+	      <td>Slices</td>
+	      <td id="SLICE"></td>
+	    </tr>
+	  </tbody>
+	</table>
+      </div>
+    </div>
+    
+    <div class="container marketing">
+      <div class="row">
+	<div class="col-md-8 col-md-offset-2">
+	  <canvas id="my-canvas"></canvas>
+	</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container marketing">
+    <hr class="featurette-divider"> 
+    <div class="span7 text-center">    
+      <div id="loading-indicator" style="display:none">
+	<img src="static/img/ajaxloader.gif">
+	<h3>Please be patient while we analyze your Chest CT.</h3>
+	<h3>This process may take several minutes.</h3>
+	<hr class="featurette-divider">
+      </div>
+      
+      <div id="dropbox-container">
+	<h3>Drop any TIFF Chest CT below and click the Analyze button.</h3>
+	<div id="dropbox">
+	  <span class="message">Drop images here to upload.</span>
+	</div>      
+	<p><a class="btn btn-lg btn-primary" id="processButton" role="button">ANALYZE CHEST CT</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- /END THE FEATURETTES -->
+  
+  <!-- FOOTER -->
+  <div class="container marketing">
+    <hr class="featurette-divider">
+    <div class="span7 text-center">   
+      <footer>
+	<p class="pull-right"><a href="#">Back to top</a></p>
+       <p>&copy; 2014 MOO Scans &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+    </div><!-- /.container -->
+  </div>
+</body>
+</html>
