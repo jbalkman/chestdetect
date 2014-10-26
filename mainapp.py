@@ -160,7 +160,13 @@ def block_size(size):
     block[(size - 1 ) / 2, (size - 1 ) / 2] = 0
     return block
 
-def custom_elem(n):
+
+def custom_square(n):
+    mycustom = np.ones((n,n,1), dtype=np.int)
+
+    return mycustom
+
+def custom_cross(n):
     mycustom = np.zeros((n,n,1), dtype=np.int)
     mycustom[0:n,1:n-1] = 1
     mycustom[1:n-1,0:n] = 1
@@ -277,16 +283,16 @@ def processMatrix(mtx,dim):
     #        DENOISING       #
     #------------------------#
     erodim = 4 # erosion dimension
-    cr = 4 # custom radius for the structured 
+    cr = 3 # custom radius for the structured 
 
     if dim == 512:
         erodim = 4
-        cr = 4
+        cr = 3
     elif dim == 712:
-        erodim = 8
-        cr = 6
+        erodim = 5
+        cr = 5
 
-    gmtx_eroded = ndimage.binary_erosion(gmtx, structure=np.ones((erodim,erodim,1))).astype(gmtx.dtype)
+    gmtx_eroded = ndimage.binary_erosion(gmtx, structure=custom_cross(erodim)).astype(gmtx.dtype)
     #gmtx_eroded = ndimage.binary_erosion(gmtx, structure=myball).astype(gmtx.dtype)
     gmtx_eroded = gmtx_eroded.astype('uint8')
     eroded = gmtx_eroded * 255
@@ -298,20 +304,22 @@ def processMatrix(mtx,dim):
     #       SKIMAGE       #
     #---------------------#
     markers, nummarks = ndimage.label(gmtx_eroded)
-    flood = markers
+    bins = np.bincount(markers.flatten())
+    bins[0] = 0
+    cwmark = np.argmax(bins)
     for zdim in xrange(markers.shape[2]):
         for col in xrange(markers.shape[1]):
-            first = np.argmax(flood[:,col,zdim] == 1)
-            last = flood.shape[1] - 1 - np.argmax(flood[::-1,col,zdim] == 1)
-            markers[0:first,col,zdim] = 1
-            markers[last:,col,zdim] = 1
+            first = np.argmax(markers[:,col,zdim] == cwmark)
+            last = markers.shape[1] - 1 - np.argmax(markers[::-1,col,zdim] == cwmark)
+            markers[0:first,col,zdim] = cwmark
+            markers[last:,col,zdim] = cwmark
 
     #markers = markers.astype('uint8')
-    markers[markers == 1] = 0 # in markers image, 0 is background and 1 is the largest blob (ie chest wall & mediastinum)
+    markers[markers == cwmark] = 0 # in markers image, 0 is background and 1 is the largest blob (i.e. chest wall & mediastinum)
     markers = markers > 0
     markers = markers.astype('uint8')
 
-    myelem = custom_elem(cr)
+    myelem = custom_square(cr)
     opened = ndimage.morphology.binary_opening(markers, myelem)
     opened = opened.astype('uint8')
 
@@ -320,19 +328,17 @@ def processMatrix(mtx,dim):
 
     bins = np.bincount(markers.flatten())
 
-    print nummarks, bins
     for i in range(1, nummarks+1):
-        
-       com = ndimage.measurements.center_of_mass(markers == i)
-       print com
-       tmpimg_orig = np.array(original[:,:,int(com[2])])
-       tmpimg_open = np.array(opened[:,:,int(com[2])])
-       cv2.circle(tmpimg_orig,(int(com[1]),int(com[0])),50,[255,255,255],10)            
-       cv2.circle(tmpimg_open,(int(com[1]),int(com[0])),50,[255,255,255],10)            
-       original[:,:,com[2]] = tmpimg_orig
-       opened[:,:,com[2]] = tmpimg_open
-        
-    print original.shape
+        if bins[i] > 10:
+            com = ndimage.measurements.center_of_mass(markers == i)
+            print com
+            tmpimg_orig = np.array(original[:,:,int(com[2])])
+            tmpimg_open = np.array(opened[:,:,int(com[2])])
+            cv2.circle(tmpimg_orig,(int(com[1]),int(com[0])),50,[255,255,255],10)            
+            cv2.circle(tmpimg_open,(int(com[1]),int(com[0])),50,[255,255,255],10)            
+            original[:,:,com[2]] = tmpimg_orig
+            opened[:,:,com[2]] = tmpimg_open
+
     return original, eroded, markers, opened
 
 def printMatrix(p1, p2, p3, p4, pfx, nfls):
